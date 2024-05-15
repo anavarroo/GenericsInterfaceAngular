@@ -7,30 +7,30 @@
         <h1 class="title">GENERICS</h1>
         <div class="container" [class.right-panel-active]="containerActive">
           <div class="form-container sign-up-container">
-            <form class="form" action="/register" method="post">
+            <form class="form" (submit)="onRegister(firstName.value, lastName.value, email.value, password.value, checkAuth.checked)">
               <h1>REGISTRAR</h1>
-              <input name="firstName" id="firstName" type="text" placeholder="Nombre" required/>
-              <input name="lastName" id="lastName" type="text" placeholder="Apellidos" required/>
-              <input name="email" id="email" type="email" placeholder="Correo" required/>
-              <input name="password" id="password" type="password" placeholder="Contraseña" required/>
-              <section class="">
+              <input #firstName name="text" type="text" placeholder="Nombre" required/>
+              <input #lastName name="text" type="text" placeholder="Apellidos" required/>
+              <input #email name="email" type="email" placeholder="Correo" required/>
+              <input #password name="password" type="password" placeholder="Contraseña" required/>
+              <section>
                 <label class="switch">
                   <p>Doble Autenticacion:</p>
-                  <input type="checkbox" name="checkAuth" class="checkbox" value="true">
+                  <input #checkAuth type="checkbox" class="checkbox" value="true">
                   <div class="slider"></div>
                 </label>
               </section>
-              <button>Crear</button>
+              <button type="submit">Crear</button>
             </form>
-          </div>
+          </div>          
           <div class="form-container sign-in-container">
-            <form class="form" action="/auth" method="post">
+            <form class="form" (submit)="onLogin(email.value, password.value, otp.value)">
               <h1>INICIAR SESION</h1>
-              <input name="email" id="email" type="email" placeholder="Correo" required/>
-              <input name="password" id="password" type="password" placeholder="Contraseña" required/>
-              <input name="otp" id="otp" type="number" placeholder="2FA"/>
+              <input #email  name="email" type="email" placeholder="Correo" required/>
+              <input #password name="password"  type="password" placeholder="Contraseña" required/>
+              <input #otp name="number"  type="number" placeholder="2FA"/>
               <a href="#">Olvidaste contraseña?</a>
-              <button>Entrar</button>
+              <button type="submit">Entrar</button>
             </form>
           </div>
           <div class="overlay-container">

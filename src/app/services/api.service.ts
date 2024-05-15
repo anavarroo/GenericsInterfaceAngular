@@ -1,25 +1,38 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  async authLogin(user: any) {
-    try {
-      const response = await axios.post(`http://api-gateway:8081/auth/login`, user);
-      return response.data;
-    } catch (error) {
-      throw new Error('Error al registrar user');
-    }
+  private jwtSecret = 'lMCvj7Sirkk41OpuXDBKoSA1YeQ4aTeHmP4gzoyoaLk=';
+
+  constructor(private http: HttpClient) { }
+
+  authLogin(email: string, password: string, otp: string): Observable<any> {
+    const user = {
+      correo: email,
+      contrasena: password
+    };
+    
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.jwtSecret
+    });
+
+    return this.http.post<any>(`auth/login`, user, { headers });
   }
 
-  async authRegister(newUser: any) {
-    try {
-      const response = await axios.post(`http://api-gateway:8081/auth/register`, newUser);
-      return response.data;
-    } catch (error) {
-      throw new Error('Error al registrar user');
-    }
+  authRegister(firstName: string, lastName: string, email: string, password: string, checkAuth: boolean) {
+    const newUser = {
+      nombre: firstName,
+      apellidos: lastName,
+      correo: email,
+      contrasena: password,
+      mfaEnabled: checkAuth
+    };
+
+    return this.http.post<any>(`auth/register`, newUser);
   }
 }
