@@ -1,8 +1,9 @@
 main {
   text-align: center;
 }
-content-error img {
+main img {
   width: 50%;
+  margin: auto;
 }
 .loader {
   display: flex;
