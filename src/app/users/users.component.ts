@@ -58,7 +58,7 @@ export class UsersComponent implements OnInit {
 
       case 'edit':
         content = `
-          <form class="form" id="searchForm" action="/getUser" method="post">
+          <form class="form" id="searchForm" action="/getUser" method="put">
             <h1>Editar Usuario</h1>
             <div class="input-form form-edit">
               <div class="form-group">
@@ -75,7 +75,7 @@ export class UsersComponent implements OnInit {
 
       case 'delete':
         content = `
-          <form class="form" id="deleteUserForm" action="/deleteUser" method="post">
+          <form class="form" id="deleteUserForm" action="/deleteUser" method="delete">
             <h1>Eliminar Usuario</h1>
             <div class="input-form form-delete">
                 <div class="form-group">
@@ -92,7 +92,7 @@ export class UsersComponent implements OnInit {
 
       case 'consult':
         content = `
-          <form class="form" id="searchForm" action="/getUser" method="post">
+          <form class="form" id="searchForm" action="/getUser" method="get">
           <h1>Buscar Usuario</h1>
             <div class="input-form">
               <div class="form-group">

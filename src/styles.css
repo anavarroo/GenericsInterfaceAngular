@@ -131,4 +131,13 @@ main {
 .menu-text:hover::before {
   width: 100%;
 }
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group > * {
+  margin-bottom: 10px; /* Puedes ajustar el valor según tus necesidades */
+}
 /*  ------------------------------  FOOTER...  ------------------------------ */
