@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({  
   selector: 'app-auth',
@@ -8,13 +9,12 @@ import { Router } from '@angular/router';
   styleUrl: './auth.component.css'
 })
 export class AuthComponent {
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(private apiService: ApiService, private router: Router, private authService: AuthService) { }
 
-  onLogin(email: string, password: string, otp: string) {
-    console.log(email, password, otp);
-    
+  onLogin(email: string, password: string, otp: string) {    
     this.apiService.authLogin(email, password, otp).subscribe(
       response => {
+        this.authService.setAuthToken(response.token);
         if (response) {
           this.router.navigate(['/home']);
         } else {
