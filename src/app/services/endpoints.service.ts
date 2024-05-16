@@ -1,64 +1,66 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EndpointsService {
-  async createUser(newUser: any) {
-    try {
-      const response = await axios.post(`http://localhost:8084/api/v1/usuarios/crear`, newUser);
-      const response = await axios.post(`http://api-gateway:8082/api/v1/usuarios/crear`, newUser);
-      return response.data;
-    } catch (error) {
-      throw new Error('Error al registrar user');
-    }
+  constructor(private http: HttpClient) { }
+
+  private jwtSecret = 'lMCvj7Sirkk41OpuXDBKoSA1YeQ4aTeHmP4gzoyoaLk=';
+
+  createUser(newUser: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.jwtSecret
+    });
+
+    return this.http.post<any>(`http://localhost:8084/api/v1/usuarios/crear`, newUser);
   }
 
-  async editUser(user: any, email: string) {
-    try {
-      const response = await axios.put(`http://localhost:8084/api/v1/usuarios/editar/${email}`, user);
-      const response = await axios.put(`http://api-gateway:8082/api/v1/usuarios/editar/${email}`, user);
-      return response.data;
-    } catch (error) {
-      throw new Error('Error al registrar user');
-    }
+  editUser(user: any, email: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.jwtSecret
+    });
+
+    return this.http.put<any>(`http://localhost:8084/api/v1/usuarios/editar/${email}`, user);
   }
 
-  async deleteUser(email: string) {
-    try {
-      const response = await axios.delete(`http://localhost:8084/api/v1/borrar/editar/${email}`);
-      const response = await axios.delete(`http://api-gateway:8082/api/v1/borrar/editar/${email}`);
-      return response.data;
-    } catch (error) {
-      throw new Error('Error al registrar user');
-    }
+  deleteUser(email: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.jwtSecret
+    });
+
+    return this.http.delete<any>(`http://localhost:8084/api/v1/borrar/editar/${email}`);
   }
 
-  async getUser(searchBy: string, searchTerm: string) {
-    try {
-      const response = await axios.get(`http://localhost:8084/api/v1/usuarios/${searchBy}/${searchTerm}`);
-      return response.data;
-    } catch (error) {
-      throw new Error('Error al registrar user');
-    }
+  getUser(searchBy: string, searchTerm: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.jwtSecret
+    });
+
+    return this.http.get<any>(`http://localhost:8084/api/v1/usuarios/${searchBy}/${searchTerm}`);
   }
 
-  async checkUser() {
-    try {
-      const response = await axios.get(`http://localhost:8084/api/v1/usuarios/pendientes`);
-      return response.data;
-    } catch (error) {
-      throw new Error('Error al registrar user');
-    }
+  checkUser() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.jwtSecret
+    });
+
+    return this.http.get<any>(`http://localhost:8084/api/v1/usuarios/pendientes`);
   }
 
-  async proveUser(email: string) {
-    try {
-      const response = await axios.get(`http://localhost:8084/api/v1/usuarios/aprobar/${email}?estado=true`);
-      return response.data;
-    } catch (error) {
-      throw new Error('Error al registrar user');
-    }
+  proveUser(email: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.jwtSecret
+    });
+    
+    return this.http.get<any>(`http://localhost:8084/api/v1/usuarios/aprobar/${email}?estado=true`);
   }
 }

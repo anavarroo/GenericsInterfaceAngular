@@ -6,7 +6,7 @@
       <div class="menu">
         <h1 class="title">GENERICS</h1>
         <div class="container" [class.right-panel-active]="containerActive">
-          <div class="form-container sign-up-container">
+          <div *ngIf="activeForm === 'register'" class="form-container sign-up-container">
             <form class="form" (submit)="onRegister(firstName.value, lastName.value, email.value, password.value, checkAuth.checked)">
               <h1>REGISTRAR</h1>
               <input #firstName name="text" type="text" placeholder="Nombre" required/>
@@ -22,15 +22,15 @@
               </section>
               <button type="submit">Crear</button>
             </form>
-          </div>          
-          <div class="form-container sign-in-container">
+          </div>
+          <div *ngIf="activeForm === 'login'" class="form-container sign-in-container">
             <form class="form" (submit)="onLogin(email.value, password.value, otp.value)">
               <h1>INICIAR SESION</h1>
               <input #email  name="email" type="email" placeholder="Correo" required/>
               <input #password name="password"  type="password" placeholder="Contraseña" required/>
               <input #otp name="number"  type="number" placeholder="2FA"/>
               <a href="#">Olvidaste contraseña?</a>
-              <button type="submit">Entrar</button>
+              <button type="submit2">Entrar</button>
             </form>
           </div>
           <div class="overlay-container">

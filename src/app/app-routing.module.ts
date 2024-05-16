@@ -6,6 +6,7 @@ import { AuthComponent } from './auth/auth.component';
 import { CheckComponent } from './check/check.component';
 
 const routes: Routes = [
+  { path: '', component: AuthComponent },
   { path: 'login', component: AuthComponent },
   { path: 'home', component: HomeComponent },
   { path: 'user', component: UsersComponent },

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({  
   selector: 'app-auth',
@@ -8,13 +9,13 @@ import { Router } from '@angular/router';
   styleUrl: './auth.component.css'
 })
 export class AuthComponent {
-  
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(private apiService: ApiService, private router: Router, private authService: AuthService) { }
 
   onLogin(email: string, password: string, otp: string) {    
     this.apiService.authLogin(email, password, otp).subscribe(
       response => {
-        if (response && response.authToken) {
+        this.authService.setAuthToken(response.token);
+        if (response) {
           this.router.navigate(['/home']);
         } else {
           this.router.navigate(['/check'], { state: { message: 'loginError' } });
@@ -36,16 +37,16 @@ export class AuthComponent {
     );
   }
   
-
   onRegister(firstName: string, lastName: string, email: string, password: string, checkAuth: boolean) {
     this.apiService.authRegister(firstName, lastName, email, password, checkAuth).subscribe(
       response => {
         if(response) {
           if (checkAuth && response.secret) {
-            
+            // this.router.navigate(['/check'], { state: { message: 'fa2Register' } });
+            // this.router.navigate(['/check'], { state: { message: 'fa2Error' } });
+          } else {
+            this.router.navigate(['/check'], { state: { message: 'register' } });
           }
-        } else {
-          this.router.navigate(['/login']);
         }
       },
       error => {
@@ -72,10 +73,12 @@ export class AuthComponent {
   //     token: otp
   //   });
   //   return tokenValidates;
-  // }
+  // 
 
   containerActive = false;
+  activeForm: 'login' | 'register' = 'login'; // Variable para rastrear el formulario activo
   togglePanel(active: boolean) {
     this.containerActive = active;
+    this.activeForm = active ? 'register' : 'login'; // Actualizar el formulario activo
   }
 }
